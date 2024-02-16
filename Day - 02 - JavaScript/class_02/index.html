@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>JavaScript in Body</h2>
+    <p id="demo">Click the button to change the Color and size of this paragraph</p>
+    <button onclick="myFunction()">Click Me!</button>
+    <p></p>
+    <input type="text" id="text1">
+    <p>+</p>
+    <input type="text" id="text2">
+    <p></p>
+    <button class="button">Calculate</button><p></p>
+    <input type="text" id="result"><br><br><br>
+    Make List:
+    <!-- <input type="text" id="listText">
+    <button class="addButton">ADD</button><br><br>
+    <div class="contrainer">
+        <input type="text" id="box">
+        <div class="lists">
+            <ul class="list">
+
+            </ul>
+        </div>
+    </div> -->
+
+    <input type="text" class="taskInput" placeholder="Enter a new task">
+    <button onclick="addTask()">ADD</button>
+
+    <ul id="taskList"></ul>
+
+<!-- //!isNaN(Number) && !isNaN(num2) -->
+
+    <script>
+        function myFunction(){
+            let x = document.getElementById("demo");
+            x.style.fontSize= "25px";
+            x.style.color = "red";
+        }
+            let p1 = document.getElementById("text1");
+            let p2 = document.getElementById("text2");
+            // const result = document.getElementById("result");
+            const button = document.querySelector(".button");
+            button.addEventListener("click", () => {
+                document.getElementById("result").value = p1.value.trim()+p2.value.trim();
+            })
+            
+
+            function addTask(){
+                var taskInput = document.getElementById("taskInput");
+                var taskText = taskInput.value.trim();
+                var taskList = document.querySelector
+
+                if(taskInput !== ""){
+                    var newTask = document.createElement("li");
+                    newTask.className = "teskItem";
+
+                    // newTask.innerHTML = '<input type = "checkbox">' + taskText;
+
+                    document.getElementById('taskList').appendChild(newTask);
+
+                    taskInput.value = "";
+                }
+            }
+            
+            // const listInput = document.getElementById("listText");
+            // const button2 = document.querySelector(".addButton");
+            // const show = document.getElementById("box");
+            // const result = querySelector("#box");
+
+            // button2.addEventListener("click", () => {
+            //     const value = result.value;
+            //     const tasks = document.createElement('li');
+            //     result.appendChild(document.createTextNode(value));
+            //     document.querySelector('#list').appendChild(tasks);
+            //     console.log(value);
+            // });
+
+        
+    </script>
+</body>
+</html>
