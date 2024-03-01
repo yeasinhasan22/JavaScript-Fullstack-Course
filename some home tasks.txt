@@ -1,3 +1,6 @@
 1. Form Assignment: 
 	- FirstName, Lastname, username, password - making sure fields are 	not empty and valid inputs.
 	- extra credit for making password Validation. (min 8 Character, 	1 capital)
+
+2. Registration page - dynamic page like - required will be vanished when something is written.
+	- Todo list
