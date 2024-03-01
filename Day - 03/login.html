@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="login.css">
+    <title>Log In</title>
+</head>
+<body>
+    <form id="login" action="">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="userame" placeholder="eg. johndoe" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Log In</button>
+        <p class ="confirm" id="confirmation"></p>
+    </form>
+</body>
+<script>
+    const user= {
+        username: 'johndoe',
+        password: 'password'
+    }
+    document.getElementById("login").onsubmit = function(event){
+        event.preventDefault();
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const confirmation = document.getElementById("confirmation");
+
+        var validate = false;
+
+        if(username==user.username && password==user.password){
+            validate = true;
+        }
+        if(validate==true){
+            confirmation.textContent = 'You have logged in Successfully';
+            window.location.href = 'home.html';
+            return;
+        }
+        else confirmation.textContent = 'Invalid Credentials';
+    
+    }
+</script>
+</html>
