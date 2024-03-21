@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="header">TO-DO List</h1>
+
+        <div class="todo">
+            <input type="text" id="newItem" placeholder="Add new item">
+            <button id="addItemButton">Add Item</button>
+            <select id="filter">
+                <option value="all">All</option>
+                <option value="today">Today</option>
+                <option value="tomorrow">Tomorrow</option>
+                <option value="yesterday">Yesterday</option>
+            </select>
+        </div>
+
+        <ul id="todoList"></ul>
+    </div>
+
+    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const todoList = document.getElementById('todoList');
+    const newItemInput = document.getElementById('newItem');
+    const addItemButton = document.getElementById('addItemButton');
+    const filterSelect = document.getElementById('filter');
+    let tasks = [];
+
+    addItemButton.addEventListener('click', addTask);
+    filterSelect.addEventListener('change', filterTasks);
+
+    function addTask() {
+        const newItem = newItemInput.value.trim();
+        if (!newItem) {
+            alert('Please enter a task name.');
+            return;
+        }
+        const parts = newItem.split('@');
+        const task = {
+            name: parts[0].trim(),
+            tag: parts[1] ? parts[1].trim() : 'all'
+        };
+        tasks.push(task);
+        renderTasks(filterSelect.value);
+        newItemInput.value = '';
+    }
+
+    function filterTasks() {
+        renderTasks(filterSelect.value);
+    }
+
+    function renderTasks(tag) {
+        todoList.innerHTML = '';
+        tasks.forEach((task, index) => {
+            if (tag === 'all' || task.tag === tag) {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <span>${task.name}</span>
+                    <button class="deleteButton" data-index="${index}">Delete</button>
+                `;
+                if (tag !== 'all') {
+                    listItem.classList.add('tagged');
+                }
+                todoList.appendChild(listItem);
+            }
+        });
+        const deleteButtons = document.querySelectorAll('.deleteButton');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', deleteTask);
+        });
+    }
+
+    function deleteTask() {
+        const index = parseInt(this.dataset.index);
+        tasks.splice(index, 1);
+        renderTasks(filterSelect.value);
+    }
+});
+
+    </script>
+</body>
+</html>
