@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Todo List</title>
     <link rel="stylesheet" href="home.css">
 </head>
 <body>
-    <h1>Hello John Doe</h1>
+    
     <div id="myDIV" class="header">
         <h2>My To Do List</h2>
         <input type="text" id="myInput" placeholder="Title...">
@@ -15,7 +15,7 @@
       </div>
       
       <ul id="myUL">
-        <li>Hit the gym</li>
+        <li> Hit the gym</li>
         <li class="checked">Pay bills</li>
         <li>Meet George</li>
         <li>Buy eggs</li>
@@ -63,6 +63,8 @@ function newElement() {
   if (inputValue === '') {
     alert("You must write something!");
   } else {
+    const checkbox = document.createElement('input');
+    
     document.getElementById("myUL").appendChild(li);
   }
   document.getElementById("myInput").value = "";
@@ -70,6 +72,7 @@ function newElement() {
   var span = document.createElement("SPAN");
   var txt = document.createTextNode("\u00D7");
   span.className = "close";
+  span.appendChild();
   span.appendChild(txt);
   li.appendChild(span);
 
@@ -80,6 +83,12 @@ function newElement() {
     }
   }
 }
+
+// const list = document.getElementById('myUL');
+
+li.addEventListener('mouseover', function(){
+  li.style.backgroundColor = 'red';
+});
 
 </script>
 </html>
