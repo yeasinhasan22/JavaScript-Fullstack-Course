@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="style.css">
+    <i class="fa fa-plus" aria-hidden="true"></i>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="header">
+        <h1 class="headerText">TO-DO List</h1>
+    </div>
+    <div class="container">
+
+        <div class="todo">
+            <input type="text" id="newItem" placeholder="Add a Task"> 
+            <button id="addItemButton">Add Item</button>
+        </div>  
+    </div>
+    
+    <div class="container">
+        <h1>Tasks:</h1>
+        <select id="filter">
+            <!-- <option value="all">All</option>
+            <option value="today">Today</option>
+            <option value="tomorrow">Tomorrow</option>
+            <option value="dayafter">Day After</option> -->
+        </select>
+        <p id="filtered"></p>
+        <ul id="todoList"></ul>
+    </div>
+
+    <script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+    const todoList = document.getElementById('todoList');
+    const newItemInput = document.getElementById('newItem');
+    const addItemButton = document.getElementById('addItemButton');
+    const filterSelect = document.getElementById('filter');
+    const filtered = document.getElementById('filtered');
+
+    const filters = ["all","today","tomorrow","yesterday"]
+    let tasks = [];
+    updateFilter();
+    
+
+    
+    addItemButton.addEventListener('click', addTask);
+    filterSelect.addEventListener('change', filterTasks);
+
+    function addTask() {
+        const newItem = newItemInput.value.trim();
+        if (!newItem) {
+            alert('Please enter a task name.');
+            return;
+        }
+        const parts = newItem.split('@');
+        const task = {
+            name: parts[0].trim(),
+            tag: parts[1] ? parts[1].trim() : 'all'
+        };
+        if(!filters.some(filter => filter === task.tag)){
+            filters.push(parts[1].trim());
+            updateFilter();
+        }
+        tasks.push(task);
+        renderTasks(filterSelect.value);
+        newItemInput.value = '';
+        // filtered.innerText='';
+    }
+
+    function filterTasks() {
+        renderTasks(filterSelect.value);
+    }
+
+    function renderTasks(tag) {
+    todoList.innerHTML = '';
+    tasks.forEach((task, index) => {
+        if (tag === 'all' || task.tag === tag) {
+            const listItem = document.createElement('li');
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.addEventListener('change', function() {
+                const span = this.nextElementSibling;
+                span.style.textDecoration = this.checked ? 'line-through' : 'none';
+            });
+
+            listItem.appendChild(checkbox);
+            const span = document.createElement('span');
+            span.textContent = task.name;
+            listItem.appendChild(span);
+
+            const deleteButton = document.createElement('button');
+            deleteButton.className = 'deleteButton';
+            deleteButton.textContent = 'Delete';
+            deleteButton.dataset.index = index;
+            deleteButton.addEventListener('click', deleteTask);
+            listItem.appendChild(deleteButton);
+
+            if (tag !== 'all') {
+                listItem.classList.add('tagged');
+                filtered.innerText=tag;
+            }
+            if(tag === 'all') {
+                filtered.innerText= "All the Tasks:"
+            }
+            todoList.appendChild(listItem);
+        }
+    });
+}
+
+    //adding dynamically to the options
+    // function addOptionsFromInput(){
+    //     const inputText = newItemInput.value.trim();
+    //     if(!inputText){
+    //         return;
+    //     }
+    //     const select = filterSelect;
+    //     const options = inputText.split('@');
+
+    //     options.forEach(option => {
+    //         const trimmedOption = option.trim();
+    //         if(trimmedOption){
+    //             const newOption = document.createElement('option');
+    //             newOption.value = trimmedOption;
+    //             newOption.textContent = trimmedOption;
+    //             select.appendChild(option);
+    //         }
+    //     })
+    // }
+
+    function updateFilter(tag){
+        const dropDown = document.getElementById('filter');
+        dropDown.innerHTML = "";
+
+        filters.forEach(element => {
+            dropDown.insertAdjacentHTML("beforeend", `<option value="${element}">${element}</option>`)
+        });
+    }
+
+    function deleteTask() {
+        const index = parseInt(this.dataset.index);
+        tasks.splice(index, 1);
+        renderTasks(filterSelect.value);
+    }
+});
+
+    </script>
+</body>
+</html>
