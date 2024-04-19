@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Gallery</title>
+<style>
+  /* CSS for the modal */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 50px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.9);
+  }
+
+  .modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+  }
+
+  .modal-content img {
+    width: 100%;
+    height: auto;
+  }
+
+  /* CSS to change cursor on hover */
+  .displayed-img:hover {
+    cursor: zoom-in;
+  }
+</style>
+</head>
+<body>
+
+<!-- HTML structure for the gallery -->
+<div class="thumb-bar">
+  <!-- Thumbnails will be added here dynamically -->
+</div>
+
+<div class="modal" id="myModal">
+  <span class="close">&times;</span>
+  <div class="modal-content">
+    <img id="modalImg">
+  </div>
+</div>
+
+<!-- Displayed image -->
+<img class="displayed-img" src="" alt="Displayed Image">
+
+<script>
+  const displayedImage = document.querySelector('.displayed-img');
+  const thumbBar = document.querySelector('.thumb-bar');
+  const modal = document.getElementById('myModal');
+  const modalImg = document.getElementById('modalImg');
+  const closeBtn = document.querySelector('.close');
+
+  const images = ['pic1.jpg', 'pic2.jpg', 'pic3.jpg', 'pic4.jpg', 'pic5.jpg'];
+  const alts = {
+    'pic1.jpg': 'Closeup of a Human eye',
+    'pic2.jpg': 'Rock that looks like a wave',
+    'pic3.jpg': 'Purple and white pansies',
+    'pic4.jpg': 'Section of wall from a pharaoh\'s tomb',
+    'pic5.jpg': 'Large moth on a leaf'
+  }
+
+  for (const image of images) {
+    const newImage = document.createElement('img');
+    newImage.setAttribute('src', `images/${image}`);
+    newImage.setAttribute('alt', alts[image]);
+    thumbBar.appendChild(newImage);
+    newImage.addEventListener('click', e => {
+      displayedImage.src = e.target.src;
+      displayedImage.alt = e.target.alt;
+    });
+  }
+
+  displayedImage.addEventListener('mouseover', function() {
+    modal.style.display = 'block';
+    modalImg.src = this.src;
+  });
+
+  displayedImage.addEventListener('mouseout', function() {
+    modal.style.display = 'none';
+  });
+
+  closeBtn.addEventListener('click', function() {
+    modal.style.display = 'none';
+  });
+</script>
+
+</body>
+</html>
